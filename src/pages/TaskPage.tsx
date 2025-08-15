@@ -17,10 +17,9 @@ export default function TaskPage() {
     setEditingTask(task);
     setShowForm(true);
   };
-  
+
   const handleFormSubmit = (data: {
     title: string;
-    description: string;
     dueDate: string;
     categoryId: number;
   }) => {
@@ -34,15 +33,15 @@ export default function TaskPage() {
   };
 
   //Subtask
-  const addSubTask = (taskId: number, title: string, description: string) => {
+  const addSubTask = (taskId: number, title: string) => {
     setTasks(tasks.map(t =>
-      t.id === taskId ? { ...t, subtasks: [...t.subtasks, { id: Date.now(), title, description, completed: false }] } : t
+      t.id === taskId ? { ...t, subtasks: [...t.subtasks, { id: Date.now(), title, completed: false }] } : t
     ));
   };
 
   const updateSubTask = (taskId: number, subTaskId: number, updates: Partial<SubTask>) => {
-    if (updates.description !== undefined && !updates.description.trim()) {
-      alert("Subtask description cannot be empty");
+    if (updates.title !== undefined) {
+      alert("Subtask title cannot be empty");
       return;
     }
 
@@ -146,7 +145,7 @@ export default function TaskPage() {
         onToggle={id => setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t))}
         onRemove={id => setTasks(tasks.filter(t => t.id !== id))}
         onEdit={openEditTaskForm}
-        onAddSubTask={(taskId, title, description) => addSubTask(taskId, title, description)}
+        onAddSubTask={(taskId, title) => addSubTask(taskId, title)}
         onToggleSubTask={toggleSubTask}
         onRemoveSubTask={removeSubTask}
         onUpdateSubTask={(taskId, subId, updates) => updateSubTask(taskId, subId, updates)}
