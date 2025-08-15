@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Task, Category, SubTask } from "../types";
+import { isoToUSDate } from "../utils/date";
 
 interface TaskItemProps {
   task: Task;
@@ -44,7 +45,7 @@ export default function TaskItem({
           <input type="checkbox" checked={task.completed} onChange={onToggle} />
           <strong>{task.title}</strong> {category && <em>[{category.name}]</em>}
         </label>
-        {task.dueDate && <span>Due: {task.dueDate}</span>}
+        {task.dueDate && <span>Due date: {isoToUSDate(task.dueDate)}</span>}
       </div>
 
       <button onClick={() => onEdit(task)}>Edit Task</button>
