@@ -108,12 +108,11 @@ test("add a subtask", () => {
 
     // Add a subtask
     const taskItem = screen.getByText("Task 1").closest("li");
-    fireEvent.click(within(taskItem!).getByText(/\+ add subtask/i));
+    fireEvent.click(within(taskItem!).getByText(/\add subtask/i));
 
     const subtaskTitleInput = within(taskItem!).getByPlaceholderText(/subtask title/i);
 
     fireEvent.change(subtaskTitleInput, { target: { value: "Subtask 1" } });
-    fireEvent.change(subtaskDescInput, { target: { value: "Subtask Desc" } });
     fireEvent.click(within(taskItem!).getByText(/add subtask/i));
 
     expect(screen.getByText("Subtask 1")).toBeInTheDocument();
@@ -135,10 +134,9 @@ test("edit a subtask", () => {
 
     // Add a subtask
     const taskItem = screen.getByText("Task 1").closest("li");
-    fireEvent.click(within(taskItem!).getByText(/\+ add subtask/i));
+    fireEvent.click(within(taskItem!).getByText(/\add subtask/i));
     const subtaskTitleInput = within(taskItem!).getByPlaceholderText(/subtask title/i);
     fireEvent.change(subtaskTitleInput, { target: { value: "Subtask 1" } });
-    fireEvent.change(subtaskDescInput, { target: { value: "Subtask Desc" } });
     fireEvent.click(within(taskItem!).getByText(/add subtask/i));
 
     // Find the snew ubtask
@@ -173,10 +171,9 @@ test("complete a subtask", () => {
 
     // Add a subtask
     const taskItem = screen.getByText("Task 1").closest("li");
-    fireEvent.click(within(taskItem!).getByText(/\+ add subtask/i));
+    fireEvent.click(within(taskItem!).getByText(/\add subtask/i));
     const subtaskTitleInput = within(taskItem!).getByPlaceholderText(/subtask title/i);
     fireEvent.change(subtaskTitleInput, { target: { value: "Subtask 1" } });
-    fireEvent.change(subtaskDescInput, { target: { value: "Subtask Desc" } });
     fireEvent.click(within(taskItem!).getByText(/add subtask/i))
 
     // Check subtask box

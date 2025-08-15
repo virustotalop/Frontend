@@ -64,7 +64,7 @@ export default function TaskItem({
                 />
                 <button onClick={() => {
                   if (!subTaskTitle.trim()) {
-                    alert("Title is are required.");
+                    alert("Title is required.");
                     return;
                   }
                   onUpdateSubTask(st.id, { title: subTaskTitle });

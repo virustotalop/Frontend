@@ -40,11 +40,6 @@ export default function TaskPage() {
   };
 
   const updateSubTask = (taskId: number, subTaskId: number, updates: Partial<SubTask>) => {
-    if (updates.title !== undefined) {
-      alert("Subtask title cannot be empty");
-      return;
-    }
-
     setTasks(tasks.map(t =>
       t.id === taskId
         ? {
