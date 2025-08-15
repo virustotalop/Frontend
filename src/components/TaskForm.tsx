@@ -69,7 +69,7 @@ export default function TaskForm({ task, categories, onSubmit }: TaskFormProps) 
     <form role="form" onSubmit={handleSubmit}>
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <div>
+      <div style={{ marginBottom: "1rem"}}>
         <label htmlFor="title">Title</label>
         <input
           id="title"
@@ -79,7 +79,7 @@ export default function TaskForm({ task, categories, onSubmit }: TaskFormProps) 
         />
       </div>
 
-      <div>
+      <div style={{ marginBottom: "1rem"}}>
         <label htmlFor="dueDate">Due Date</label>
         <input
           id="dueDate"
@@ -89,7 +89,7 @@ export default function TaskForm({ task, categories, onSubmit }: TaskFormProps) 
         />
       </div>
 
-      <div>
+      <div style={{ marginBottom: "1rem"}}>
         <label htmlFor="category">Category</label>
         <select
           id="category"

@@ -50,8 +50,7 @@ export default function TaskItem({
 
       <button onClick={() => onEdit(task)}>Edit Task</button>
       <button onClick={onRemove}>Delete Task</button>
-
-      {/* Subtasks */}
+      
       <ul style={{ paddingLeft: "1.5rem" }}>
         {task.subtasks.map(st => (
           <li key={st.id}>
@@ -89,8 +88,6 @@ export default function TaskItem({
           </li>
         ))}
       </ul>
-
-      {/* Inline Add Subtask Form */}
       <div style={{ marginTop: "0.5rem" }}>
         <input
           type="text"

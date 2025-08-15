@@ -92,7 +92,7 @@ export default function TaskPage() {
         {categories.map(c => (
           <li key={c.id}>
             {c.name}
-            <button onClick={() => {
+            <button style={{ margin: "1rem" }} onClick={() => {
               const newName = prompt("Rename category", c.name);
               if (newName) renameCategory(c.id, newName);
             }}>Edit</button>
@@ -100,12 +100,12 @@ export default function TaskPage() {
           </li>
         ))}
       </ul>
-      <button onClick={() => {
+      <button style={{ marginBottom: "1rem" }}onClick={() => {
         const name = prompt("Category name");
         if (name) addCategory(name);
       }}>Add Category</button>
 
-      <div style={{ margin: "1rem" }}>
+      <div>
         <label>
           Category:
           <select value={filterCategoryId} onChange={e => setFilterCategoryId(e.target.value === "all" ? "all" : parseInt(e.target.value))}>
@@ -114,7 +114,7 @@ export default function TaskPage() {
           </select>
         </label>
 
-        <label style={{ marginLeft: "1rem" }}>
+        <label>
           Status:
           <select value={filterCompleted} onChange={e => setFilterCompleted(e.target.value as any)}>
             <option value="all">All</option>
@@ -123,14 +123,14 @@ export default function TaskPage() {
           </select>
         </label>
       </div>
-
-      <h2>Tasks</h2>
+      <h2>Create Task</h2>
       <TaskForm
         task={editingTask || undefined}
         categories={categories}
         onSubmit={handleFormSubmit}
       />
 
+      <h2>Tasks</h2>
       <TaskList
         tasks={filteredTasks}
         categories={categories}

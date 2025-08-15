@@ -7,7 +7,7 @@ export interface TaskListProps {
   onToggle: (id: number) => void;
   onRemove: (id: number) => void;
   onEdit: (task: Task) => void;
-  onAddSubTask: (taskId: number, title: string, description: string) => void;
+  onAddSubTask: (taskId: number, title: string) => void;
   onToggleSubTask: (taskId: number, subId: number) => void;
   onRemoveSubTask: (taskId: number, subId: number) => void;
   onUpdateSubTask: (taskId: number, subId: number, updates: { title?: string; }) => void;
@@ -29,7 +29,7 @@ export default function TaskList({
   }
 
   return (
-    <ul>
+    <ul style={{ listStyleType: "none", paddingLeft: 0 }}>
       {tasks.map(task => (
         <TaskItem
           key={task.id}
