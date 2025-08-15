@@ -24,13 +24,11 @@ test("add a task", () => {
 
     const form = screen.getByRole("form");
     const titleInput = within(form).getByLabelText(/title/i);
-    const descriptionInput = within(form).getByLabelText(/description/i);
     const dueDateInput = within(form).getByLabelText(/due date/i);
     const categorySelect = within(form).getByLabelText(/category/i);
 
     //Create task
     fireEvent.change(titleInput, { target: { value: "My Task" } });
-    fireEvent.change(descriptionInput, { target: { value: "Do something" } });
     fireEvent.change(dueDateInput, { target: { value: new Date().toISOString().split("T")[0] } });
 
     const firstOption = categorySelect.querySelector("option")!;
@@ -50,7 +48,6 @@ test("edit a task", () => {
 
     const form = screen.getByRole("form");
     fireEvent.change(within(form).getByLabelText(/title/i), { target: { value: "Task 1" } });
-    fireEvent.change(within(form).getByLabelText(/description/i), { target: { value: "Desc 1" } });
     fireEvent.change(within(form).getByLabelText(/due date/i), { target: { value: new Date().toISOString().split("T")[0] } });
     const firstOption = within(form).getByLabelText(/category/i).querySelector("option")!;
     fireEvent.change(within(form).getByLabelText(/category/i), { target: { value: firstOption.value } });
@@ -63,7 +60,6 @@ test("edit a task", () => {
 
     const editForm = screen.getByRole("form");
     fireEvent.change(within(editForm).getByLabelText(/title/i), { target: { value: "Task 1 Edited" } });
-    fireEvent.change(within(editForm).getByLabelText(/description/i), { target: { value: "Updated Desc" } });
     fireEvent.click(within(editForm).getByText(/update task/i));
 
     expect(screen.getByText("Task 1 Edited")).toBeInTheDocument();
@@ -79,7 +75,6 @@ test("complete a task", () => {
 
     const form = screen.getByRole("form");
     fireEvent.change(within(form).getByLabelText(/title/i), { target: { value: "Task 1" } });
-    fireEvent.change(within(form).getByLabelText(/description/i), { target: { value: "Desc 1" } });
     fireEvent.change(within(form).getByLabelText(/due date/i), { target: { value: new Date().toISOString().split("T")[0] } });
     const firstOption = within(form).getByLabelText(/category/i).querySelector("option")!;
     fireEvent.change(within(form).getByLabelText(/category/i), { target: { value: firstOption.value } });
@@ -106,7 +101,6 @@ test("add a subtask", () => {
 
     const form = screen.getByRole("form");
     fireEvent.change(within(form).getByLabelText(/title/i), { target: { value: "Task 1" } });
-    fireEvent.change(within(form).getByLabelText(/description/i), { target: { value: "Desc 1" } });
     fireEvent.change(within(form).getByLabelText(/due date/i), { target: { value: new Date().toISOString().split("T")[0] } });
     const firstOption = within(form).getByLabelText(/category/i).querySelector("option")!;
     fireEvent.change(within(form).getByLabelText(/category/i), { target: { value: firstOption.value } });
@@ -117,7 +111,6 @@ test("add a subtask", () => {
     fireEvent.click(within(taskItem!).getByText(/\+ add subtask/i));
 
     const subtaskTitleInput = within(taskItem!).getByPlaceholderText(/subtask title/i);
-    const subtaskDescInput = within(taskItem!).getByPlaceholderText(/subtask description/i);
 
     fireEvent.change(subtaskTitleInput, { target: { value: "Subtask 1" } });
     fireEvent.change(subtaskDescInput, { target: { value: "Subtask Desc" } });
@@ -135,7 +128,6 @@ test("edit a subtask", () => {
     //Add a task
     const form = screen.getByRole("form");
     fireEvent.change(within(form).getByLabelText(/title/i), { target: { value: "Task 1" } });
-    fireEvent.change(within(form).getByLabelText(/description/i), { target: { value: "Desc 1" } });
     fireEvent.change(within(form).getByLabelText(/due date/i), { target: { value: new Date().toISOString().split("T")[0] } });
     const firstOption = within(form).getByLabelText(/category/i).querySelector("option")!;
     fireEvent.change(within(form).getByLabelText(/category/i), { target: { value: firstOption.value } });
@@ -145,7 +137,6 @@ test("edit a subtask", () => {
     const taskItem = screen.getByText("Task 1").closest("li");
     fireEvent.click(within(taskItem!).getByText(/\+ add subtask/i));
     const subtaskTitleInput = within(taskItem!).getByPlaceholderText(/subtask title/i);
-    const subtaskDescInput = within(taskItem!).getByPlaceholderText(/subtask description/i);
     fireEvent.change(subtaskTitleInput, { target: { value: "Subtask 1" } });
     fireEvent.change(subtaskDescInput, { target: { value: "Subtask Desc" } });
     fireEvent.click(within(taskItem!).getByText(/add subtask/i));
@@ -157,15 +148,12 @@ test("edit a subtask", () => {
     fireEvent.click(within(subtaskItem!).getByText(/edit/i));
 
     const titleInput = within(subtaskItem!).getByPlaceholderText(/subtask title/i);
-    const descriptionInput = within(subtaskItem!).getByPlaceholderText(/subtask description/i);
 
-    // Update title and description and save
+    // Update title and save
     fireEvent.change(titleInput, { target: { value: "Updated Title" } });
-    fireEvent.change(descriptionInput, { target: { value: "Updated Description" } });
     fireEvent.click(within(subtaskItem!).getByText(/save/i));
 
     expect(within(subtaskItem!).getByText("Updated Title")).toBeInTheDocument();
-    expect(within(subtaskItem!).getByText("Updated Description", { exact: false })).toBeInTheDocument();
 });
 
 
@@ -178,7 +166,6 @@ test("complete a subtask", () => {
     //Add a task
     const form = screen.getByRole("form");
     fireEvent.change(within(form).getByLabelText(/title/i), { target: { value: "Task 1" } });
-    fireEvent.change(within(form).getByLabelText(/description/i), { target: { value: "Desc 1" } });
     fireEvent.change(within(form).getByLabelText(/due date/i), { target: { value: new Date().toISOString().split("T")[0] } });
     const firstOption = within(form).getByLabelText(/category/i).querySelector("option")!;
     fireEvent.change(within(form).getByLabelText(/category/i), { target: { value: firstOption.value } });
@@ -188,7 +175,6 @@ test("complete a subtask", () => {
     const taskItem = screen.getByText("Task 1").closest("li");
     fireEvent.click(within(taskItem!).getByText(/\+ add subtask/i));
     const subtaskTitleInput = within(taskItem!).getByPlaceholderText(/subtask title/i);
-    const subtaskDescInput = within(taskItem!).getByPlaceholderText(/subtask description/i);
     fireEvent.change(subtaskTitleInput, { target: { value: "Subtask 1" } });
     fireEvent.change(subtaskDescInput, { target: { value: "Subtask Desc" } });
     fireEvent.click(within(taskItem!).getByText(/add subtask/i))
@@ -215,13 +201,11 @@ test("filter tasks by category", () => {
     // Add new tasks
     const form = screen.getByRole("form");
     fireEvent.change(within(form).getByLabelText(/title/i), { target: { value: "Work Task" } });
-    fireEvent.change(within(form).getByLabelText(/description/i), { target: { value: "Work Desc" } });
     fireEvent.change(within(form).getByLabelText(/due date/i), { target: { value: new Date().toISOString().split("T")[0] } });
     let categorySelect = within(form).getByRole("combobox");
     fireEvent.change(categorySelect, { target: { value: categorySelect.querySelectorAll("option")[0].value } });
     fireEvent.click(within(form).getByText(/add task/i));
     fireEvent.change(within(form).getByLabelText(/title/i), { target: { value: "Personal Task" } });
-    fireEvent.change(within(form).getByLabelText(/description/i), { target: { value: "Personal Desc" } });
     fireEvent.change(within(form).getByLabelText(/due date/i), { target: { value: new Date().toISOString().split("T")[0] } });
     categorySelect = within(form).getByRole("combobox");
     fireEvent.change(categorySelect, { target: { value: categorySelect.querySelectorAll("option")[1].value } });

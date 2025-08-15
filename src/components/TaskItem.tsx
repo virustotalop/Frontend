@@ -7,10 +7,10 @@ interface TaskItemProps {
   onToggle: () => void;
   onRemove: () => void;
   onEdit: (task: Task) => void;
-  onAddSubTask: (title: string, description: string) => void;
+  onAddSubTask: (title: string) => void;
   onToggleSubTask: (id: number) => void;
   onRemoveSubTask: (id: number) => void;
-  onUpdateSubTask: (subTaskId: number, updates: { title?: string; description?: string }) => void;
+  onUpdateSubTask: (subTaskId: number, updates: { title?: string; }) => void;
 }
 
 export default function TaskItem({
@@ -26,19 +26,15 @@ export default function TaskItem({
 }: TaskItemProps) {
   const [editingSubTaskId, setEditingSubTaskId] = useState<number | null>(null);
   const [subTaskTitle, setSubTaskTitle] = useState("");
-  const [subTaskDescription, setSubTaskDescription] = useState("");
-
   const [newSubTaskTitle, setNewSubTaskTitle] = useState("");
-  const [newSubTaskDescription, setNewSubTaskDescription] = useState("");
 
   const handleAddSubTask = () => {
-    if (!newSubTaskTitle.trim() || !newSubTaskDescription.trim()) {
-      alert("Both title and description are required for subtasks.");
+    if (!newSubTaskTitle.trim()) {
+      alert("Title is required for subtasks.");
       return;
     }
-    onAddSubTask(newSubTaskTitle, newSubTaskDescription);
+    onAddSubTask(newSubTaskTitle);
     setNewSubTaskTitle("");
-    setNewSubTaskDescription("");
   };
 
   return (
@@ -48,7 +44,6 @@ export default function TaskItem({
           <input type="checkbox" checked={task.completed} onChange={onToggle} />
           <strong>{task.title}</strong> {category && <em>[{category.name}]</em>}
         </label>
-        <p>{task.description}</p>
         {task.dueDate && <span>Due: {task.dueDate}</span>}
       </div>
 
@@ -67,18 +62,12 @@ export default function TaskItem({
                   placeholder="Subtask title"
                   onChange={e => setSubTaskTitle(e.target.value)}
                 />
-                <input
-                  type="text"
-                  value={subTaskDescription}
-                  placeholder="Subtask description"
-                  onChange={e => setSubTaskDescription(e.target.value)}
-                />
                 <button onClick={() => {
-                  if (!subTaskTitle.trim() || !subTaskDescription.trim()) {
-                    alert("Both title and description are required.");
+                  if (!subTaskTitle.trim()) {
+                    alert("Title is are required.");
                     return;
                   }
-                  onUpdateSubTask(st.id, { title: subTaskTitle, description: subTaskDescription });
+                  onUpdateSubTask(st.id, { title: subTaskTitle });
                   setEditingSubTaskId(null);
                 }}>Save</button>
                 <button onClick={() => setEditingSubTaskId(null)}>Cancel</button>
@@ -87,12 +76,11 @@ export default function TaskItem({
               <div>
                 <label>
                   <input type="checkbox" checked={st.completed} onChange={() => onToggleSubTask(st.id)} />
-                  <strong>{st.title}</strong>: {st.description}
+                  <strong>{st.title}</strong>
                 </label>
                 <button onClick={() => {
                   setEditingSubTaskId(st.id);
                   setSubTaskTitle(st.title);
-                  setSubTaskDescription(st.description);
                 }}>Edit</button>
                 <button onClick={() => onRemoveSubTask(st.id)}>Delete</button>
               </div>
@@ -109,13 +97,7 @@ export default function TaskItem({
           value={newSubTaskTitle}
           onChange={e => setNewSubTaskTitle(e.target.value)}
         />
-        <input
-          type="text"
-          placeholder="Subtask description"
-          value={newSubTaskDescription}
-          onChange={e => setNewSubTaskDescription(e.target.value)}
-        />
-        <button onClick={handleAddSubTask}>+ Add Subtask</button>
+        <button onClick={handleAddSubTask}>Add Subtask</button>
       </div>
     </li>
   );

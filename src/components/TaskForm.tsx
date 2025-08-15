@@ -7,7 +7,6 @@ interface TaskFormProps {
   categories: Category[];
   onSubmit: (data: {
     title: string;
-    description: string;
     dueDate: string;
     categoryId: number;
   }) => void;
@@ -15,13 +14,11 @@ interface TaskFormProps {
 
 export default function TaskForm({ task, categories, onSubmit }: TaskFormProps) {
   const [title, setTitle] = useState(task?.title || "");
-  const [description, setDescription] = useState(task?.description || "");
   const [dueDate, setDueDate] = useState(task?.dueDate || "");
   const [categoryId, setCategoryId] = useState(task?.categoryId || (categories[0]?.id ?? 0));
   const [error, setError] = useState("");
 
   useEffect(() => {
-    setDescription(task?.description || "");
     setDueDate(task?.dueDate || "");
     setCategoryId(task?.categoryId || (categories[0]?.id ?? 0));
   }, [task, categories]);
@@ -34,18 +31,8 @@ export default function TaskForm({ task, categories, onSubmit }: TaskFormProps) 
       return;
     }
 
-    if (title.length > 20) {
-        setError("The task title has a maximum length of 20 characters");
-        return;
-    }
-
-    if (!description.trim()) {
-      setError("Task description is required");
-      return;
-    }
-
-    if (description.length > 100) {
-        setError("The task description has a maximum length of 100 characters");
+    if (title.length > 100) {
+        setError("The task title has a maximum length of 100 characters");
         return;
     }
 
@@ -72,9 +59,8 @@ export default function TaskForm({ task, categories, onSubmit }: TaskFormProps) 
     }
 
     setError("");
-    onSubmit({ title, description, dueDate, categoryId });
+    onSubmit({ title, dueDate, categoryId });
     setTitle("");
-    setDescription("");
     setDueDate("");
     setCategoryId(categories[0]?.id ?? 0);
   };
@@ -90,15 +76,6 @@ export default function TaskForm({ task, categories, onSubmit }: TaskFormProps) 
           type="text"
           value={title}
           onChange={e => setTitle(e.target.value)}
-        />
-      </div>
-
-      <div>
-        <label htmlFor="description">Description</label>
-        <textarea
-          id="description"
-          value={description}
-          onChange={e => setDescription(e.target.value)}
         />
       </div>
 
