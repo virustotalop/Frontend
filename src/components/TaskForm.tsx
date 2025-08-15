@@ -33,13 +33,20 @@ export default function TaskForm({ task, categories, onSubmit }: TaskFormProps) 
       setError("Task title is required");
       return;
     }
+
+    if (title.length > 20) {
+        setError("The task title has a maximum length of 20 characters");
+        return;
+    }
+
     if (!description.trim()) {
       setError("Task description is required");
       return;
     }
 
     if (description.length > 100) {
-        setError("The task description has a maximum length of 100 character");
+        setError("The task description has a maximum length of 100 characters");
+        return;
     }
 
     if (!dueDate) {
@@ -50,6 +57,7 @@ export default function TaskForm({ task, categories, onSubmit }: TaskFormProps) 
     const today = stripTime(new Date());
 
     // Parse the date as local (avoid UTC shift)
+    // If we don't do this then the local date picker doesn't line up with the current time
     const [year, month, day] = dueDate.split("-").map(Number);
     const selectedDate = stripTime(new Date(year, month - 1, day));
 
