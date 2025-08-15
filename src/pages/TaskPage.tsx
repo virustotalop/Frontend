@@ -12,7 +12,6 @@ export default function TaskPage() {
   const [filterCategoryId, setFilterCategoryId] = useState<number | "all">("all");
   const [filterCompleted, setFilterCompleted] = useState<"all" | "completed" | "incomplete">("all");
 
-  
   const openEditTaskForm = (task: Task) => {
     setEditingTask(task);
     setShowForm(true);
@@ -87,9 +86,7 @@ export default function TaskPage() {
 
   return (
     <div className="container">
-      <h1>Task Manager</h1>
-
-      {/* Categories */}
+      <h1>Task List</h1>
       <h2>Categories</h2>
       <ul>
         {categories.map(c => (
@@ -127,7 +124,7 @@ export default function TaskPage() {
         </label>
       </div>
 
-      {/* New task form */}
+      <h2>Tasks</h2>
       <TaskForm
         task={editingTask || undefined}
         categories={categories}
