@@ -43,15 +43,16 @@ export default function TaskItem({
       <div>
         <label>
           <input type="checkbox" checked={task.completed} onChange={onToggle} />
-          <strong>{task.title}</strong> {category && <em>[{category.name}]</em>}
+          <strong>{task.title}</strong> {category && <span>[{category.name}]</span>}
         </label>
+      </div>
+      <div style={{ marginLeft: "0.25rem", marginTop: "0.25rem" }}>
         {task.dueDate && <span>Due date: {isoToUSDate(task.dueDate)}</span>}
       </div>
-
-      <button onClick={() => onEdit(task)}>Edit Task</button>
+      <button style={{ marginRight: "0.5rem", marginBottom: "0.5rem", marginTop: "0.5rem" }} onClick={() => onEdit(task)}>Edit Task</button>
       <button onClick={onRemove}>Delete Task</button>
       
-      <ul style={{ paddingLeft: "1.5rem" }}>
+      <ul style={{ paddingLeft: "1.5rem", listStyleType: "none"}}>
         {task.subtasks.map(st => (
           <li key={st.id}>
             {editingSubTaskId === st.id ? (
@@ -76,9 +77,9 @@ export default function TaskItem({
               <div>
                 <label>
                   <input type="checkbox" checked={st.completed} onChange={() => onToggleSubTask(st.id)} />
-                  <strong>{st.title}</strong>
+                  <strong style={{ marginRight: "0.5rem" }}>{st.title}</strong>
                 </label>
-                <button onClick={() => {
+                <button style={{ marginRight: "0.5rem" }} onClick={() => {
                   setEditingSubTaskId(st.id);
                   setSubTaskTitle(st.title);
                 }}>Edit</button>
@@ -89,7 +90,7 @@ export default function TaskItem({
         ))}
       </ul>
       <div style={{ marginTop: "0.5rem" }}>
-        <input
+        <input style={{ marginRight: "0.5rem" }}
           type="text"
           placeholder="Subtask title"
           value={newSubTaskTitle}
